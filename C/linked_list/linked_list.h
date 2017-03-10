@@ -4,6 +4,7 @@ typedef struct Node {
   struct Node *next;
 } Node;
 
+Node* create(int n);
 void push(Node** list, int n);
 Node* search(Node* list, int n);
 int size(Node* list);

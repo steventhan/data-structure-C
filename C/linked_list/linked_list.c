@@ -2,9 +2,17 @@
 #include <stdio.h>
 #include "linked_list.h"
 
+// creates a head node for a singly linked list
+Node* create(int n) {
+  Node* head = malloc(sizeof* head);
+  head->val = n;
+  head->next = NULL;
+  return head;
+}
+
 // inserts new node to the head of the linked list
 void push(Node** list, int n) {
-  Node *new = malloc(sizeof *new);
+  Node* new = malloc(sizeof* new);
   new->val = n;
   new->next = *list;
   *list = new;
