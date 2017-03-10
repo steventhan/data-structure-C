@@ -29,7 +29,7 @@ int size(Node* list) {
 }
 
 // pop the head node from linked list and returns its value
-int pop_head(Node** list) {
+int shift(Node** list) {
   if (*list == NULL) {
     printf("Empty linked list\n");
     return -1;
@@ -44,9 +44,9 @@ int pop_head(Node** list) {
 }
 
 //pop the tail node from linked list and returns its value
-int pop_tail(Node** list) {
+int pop(Node** list) {
   if (*list == NULL || (*list)->next == NULL){
-    return pop_head(list);
+    return shift(list);
   }
   int popped;
   Node* cur = *list;
@@ -64,7 +64,7 @@ int pop_tail(Node** list) {
 // deletes a number from a linked list
 void delete(Node** list, int n) {
   if ((*list)->val == n) {
-    int p = pop_head(list);
+    int p = shift(list);
     return;
   }
   Node* cur = *list;

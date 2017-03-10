@@ -77,37 +77,37 @@ void test_delete(void) {
 }
 
 //tests for pop_head function
-void test_pop_head(void) {
+void test_shift(void) {
   Node* list = NULL;
   push(&list, 1);
   push(&list, 3);
   push(&list, 5);
   assert(size(list) == 3);
-  assert(pop_head(&list) == 5);
+  assert(shift(&list) == 5);
   assert(size(list) == 2);
-  assert(pop_head(&list) == 3);
+  assert(shift(&list) == 3);
   assert(size(list) == 1);
-  assert(pop_head(&list) == 1);
+  assert(shift(&list) == 1);
   assert(size(list) == 0);
-  assert(pop_head(&list) == -1);
+  assert(shift(&list) == -1);
   assert(list == NULL);
   printf("%s passed\n", __func__);
 }
 
 //tests for pop_tail function
-void test_pop_tail(void) {
+void test_pop(void) {
   Node* list = NULL;
   push(&list, 1);
   push(&list, 3);
   push(&list, 5);
   assert(size(list) == 3);
-  assert(pop_tail(&list) == 1);
+  assert(pop(&list) == 1);
   assert(size(list) == 2);
-  assert(pop_tail(&list) == 3);
+  assert(pop(&list) == 3);
   assert(size(list) == 1);
-  assert(pop_tail(&list) == 5);
+  assert(pop(&list) == 5);
   assert(size(list) == 0);
-  assert(pop_tail(&list) == -1);
+  assert(pop(&list) == -1);
   printf("%s passed\n", __func__);
 }
 
@@ -117,8 +117,8 @@ int main(void) {
   test_search();
   test_size();
   test_delete();
-  test_pop_head();
-  test_pop_tail();
+  test_shift();
+  test_pop();
 
   // printf("%d\n", list->val);
   printf("All tests passed\n");
