@@ -2,9 +2,17 @@
 #include <stdio.h>
 #include "linked_list.h"
 
+// creates a head node for a singly linked list
+Node* create(int n) {
+  Node* head = malloc(sizeof* head);
+  head->val = n;
+  head->next = NULL;
+  return head;
+}
+
 // inserts new node to the head of the linked list
 void push(Node** list, int n) {
-  Node *new = malloc(sizeof *new);
+  Node* new = malloc(sizeof* new);
   new->val = n;
   new->next = *list;
   *list = new;
@@ -29,7 +37,7 @@ int size(Node* list) {
 }
 
 // pop the head node from linked list and returns its value
-int pop_head(Node** list) {
+int shift(Node** list) {
   if (*list == NULL) {
     printf("Empty linked list\n");
     return -1;
@@ -44,9 +52,9 @@ int pop_head(Node** list) {
 }
 
 //pop the tail node from linked list and returns its value
-int pop_tail(Node** list) {
+int pop(Node** list) {
   if (*list == NULL || (*list)->next == NULL){
-    return pop_head(list);
+    return shift(list);
   }
   int popped;
   Node* cur = *list;
@@ -64,7 +72,7 @@ int pop_tail(Node** list) {
 // deletes a number from a linked list
 void delete(Node** list, int n) {
   if ((*list)->val == n) {
-    int p = pop_head(list);
+    int p = shift(list);
     return;
   }
   Node* cur = *list;

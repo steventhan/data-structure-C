@@ -3,6 +3,23 @@
 #include <stdlib.h>
 #include "linked_list.h"
 
+//tests for create function
+void test_create(void) {
+  Node* list0 = create(2);
+  assert(list0->val == 2);
+
+  Node* list = create(10);
+  push(&list, 5);
+  push(&list, 7);
+  push(&list, 8);
+
+  assert(list->val == 8);
+  assert(list->next->val == 7);
+  assert(list->next->next->val == 5);
+  assert(list->next->next->next->val == 10);
+  assert(list->next->next->next->next == NULL);
+  printf("%s passed\n", __func__);
+}
 
 //tests for push function
 void test_push(void) {
@@ -77,50 +94,50 @@ void test_delete(void) {
 }
 
 //tests for pop_head function
-void test_pop_head(void) {
+void test_shift(void) {
   Node* list = NULL;
   push(&list, 1);
   push(&list, 3);
   push(&list, 5);
   assert(size(list) == 3);
-  assert(pop_head(&list) == 5);
+  assert(shift(&list) == 5);
   assert(size(list) == 2);
-  assert(pop_head(&list) == 3);
+  assert(shift(&list) == 3);
   assert(size(list) == 1);
-  assert(pop_head(&list) == 1);
+  assert(shift(&list) == 1);
   assert(size(list) == 0);
-  assert(pop_head(&list) == -1);
+  assert(shift(&list) == -1);
   assert(list == NULL);
   printf("%s passed\n", __func__);
 }
 
 //tests for pop_tail function
-void test_pop_tail(void) {
+void test_pop(void) {
   Node* list = NULL;
   push(&list, 1);
   push(&list, 3);
   push(&list, 5);
   assert(size(list) == 3);
-  assert(pop_tail(&list) == 1);
+  assert(pop(&list) == 1);
   assert(size(list) == 2);
-  assert(pop_tail(&list) == 3);
+  assert(pop(&list) == 3);
   assert(size(list) == 1);
-  assert(pop_tail(&list) == 5);
+  assert(pop(&list) == 5);
   assert(size(list) == 0);
-  assert(pop_tail(&list) == -1);
+  assert(pop(&list) == -1);
   printf("%s passed\n", __func__);
 }
 
 // main function to run tests
 int main(void) {
+  test_create();
   test_push();
   test_search();
   test_size();
   test_delete();
-  test_pop_head();
-  test_pop_tail();
+  test_shift();
+  test_pop();
 
-  // printf("%d\n", list->val);
   printf("All tests passed\n");
 
   return 0;
