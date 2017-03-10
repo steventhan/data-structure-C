@@ -18,10 +18,11 @@ typedef struct DLL {
 DLL* create(int n);
 Node* create_node(int n);
 void push(DLL* list, int n);
+void append(DLL* list, int n);
 int size(DLL* list);
 int pop(DLL* list);
 int shift(DLL* list);
-void delete(*DLL list, int n);
+void delete(DLL* list, int n);
 
 //tests for create function
 void test_create_node(void) {
@@ -78,6 +79,26 @@ void test_push(void) {
   assert(list->head->next->next->prev == list->head->next);
   assert(list->head->next->next->prev->val == 7);
   assert(list->head->next->next->next == NULL);
+  printf("%s passed\n", __func__);
+}
+
+//test for append function
+void test_append(void) {
+  DLL* list = create(5);
+  append(list, 7);
+  append(list, 10);
+  append(list, 12);
+
+  assert(size(list) == 4);
+  assert(list->head->val == 5);
+  assert(list->head->next->val == 7);
+  assert(list->head->next->next->val == 10);
+  assert(list->head->next->next->next->val == 12);
+  assert(list->tail->val == 12);
+  assert(list->tail->prev->val == 10);
+  assert(list->tail->prev->prev->val == 7);
+  assert(list->tail->prev->prev->prev->val == 5);
+
   printf("%s passed\n", __func__);
 }
 
@@ -142,16 +163,40 @@ void test_delete(void) {
   push(list, 10);
   push(list, 12);
 
+  delete(list, 20);
   assert(size(list) == 4);
-  assert(shift(list) == 12);
+  delete(list, 7);
   assert(size(list) == 3);
-  assert(shift(list) == 10);
+  assert(list->head->val == 12);
+  assert(list->head->next->val == 10);
+  assert(list->head->next->next->val == 5);
+  assert(list->head->next->next->next == NULL);
+  assert(list->tail->val == 5);
+  assert(list->tail->prev->val == 10);
+  assert(list->tail->prev->prev->val == 12);
+  assert(list->tail->prev->prev->prev == NULL);
+
+  delete(list, 10);
   assert(size(list) == 2);
-  assert(shift(list) == 7);
+  assert(list->head->val == 12);
+  assert(list->head->next->val == 5);
+  assert(list->head->next->next == NULL);
+  assert(list->tail->val == 5);
+  assert(list->tail->prev->val == 12);
+  assert(list->tail->prev->prev == NULL);
+
+  delete(list, 5);
   assert(size(list) == 1);
-  assert(shift(list) == 5);
+  assert(list->head->val == 12);
+  assert(list->head->next == NULL);
+  assert(list->tail->val == 12);
+  assert(list->tail->prev == NULL);
+
+  delete(list, 12);
   assert(size(list) == 0);
-  assert(shift(list) == -1);
+  assert(list->head == NULL);
+  assert(list->tail == NULL);
+
   printf("%s passed\n", __func__);
 }
 
@@ -159,12 +204,12 @@ int main(void) {
   test_create_node();
   test_create();
   test_push();
+  test_append();
   test_size();
   test_pop();
   test_shift();
   test_delete();
   printf("All tests passed\n");
-
   return 0;
 }
 
@@ -192,6 +237,14 @@ void push(DLL* list, int n) {
   new->next = list->head;
   list->head->prev = new;
   list->head = new;
+}
+
+//adds new node to end of the dll
+void append(DLL* list, int n) {
+  Node* new = create_node(n);
+  new->prev = list->tail;
+  list->tail->next = new;
+  list->tail = new;
 }
 
 //calculates size of the dll
@@ -235,8 +288,9 @@ int shift(DLL* list) {
   return popped;
 }
 
-void delete(*DLL list, int n) {
-  if (list->head->val == n) {
+//deletes the node that carries the given value from the dll
+void delete(DLL* list, int n) {
+  if (list->head == NULL || list->tail == NULL || list->head->val == n) {
     int shifted = shift(list);
     return;
   } else if (list->tail->val == n) {
