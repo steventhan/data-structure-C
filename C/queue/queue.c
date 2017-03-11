@@ -11,6 +11,7 @@ Q* create_q(int n);
 void enqueue(Q* q, int n);
 int dequeue(Q* q);
 int peek(Q* q);
+int size_q(Q* q);
 
 //tests for create_q function
 void test_create_q(void) {
@@ -66,11 +67,34 @@ void test_peek(void) {
   printf("%s passed\n", __func__);
 }
 
+//tests for size function
+void test_size(void) {
+  Q* q = create_q(5);
+
+  assert(size_q(q) == 1);
+  enqueue(q, 7);
+  assert(size_q(q) == 2);
+  enqueue(q, 8);
+  assert(size_q(q) == 3);
+  enqueue(q, 9);
+  assert(size_q(q) == 4);
+  dequeue(q);
+  assert(size_q(q) == 3);
+  dequeue(q);
+  assert(size_q(q) == 2);
+  dequeue(q);
+  assert(size_q(q) == 1);
+  dequeue(q);
+  assert(size_q(q) == 0);
+  printf("%s passed\n", __func__);
+}
+
 int main(void) {
   test_create_q();
   test_enqueue();
   test_dequeue();
   test_peek();
+  test_size();
 
   printf("All tests passed\n");
   return 0;
@@ -96,4 +120,9 @@ int dequeue(Q* q) {
 //peek the first item in Q, keeps the Q intact
 int peek(Q* q) {
   return q->_q->head->val;
+}
+
+//peek the first item in Q, keeps the Q intact
+int size_q(Q* q) {
+  return size(q->_q);
 }
