@@ -37,6 +37,22 @@ void test_push(void) {
   printf("%s passed\n", __func__);
 }
 
+//tests for append function
+void test_append(void) {
+  Node* list = NULL;
+  append(&list, 10);
+  append(&list, 5);
+  append(&list, 7);
+  append(&list, 8);
+
+  assert(list->val == 10);
+  assert(list->next->val == 5);
+  assert(list->next->next->val == 7);
+  assert(list->next->next->next->val == 8);
+  assert(list->next->next->next->next == NULL);
+  printf("%s passed\n", __func__);
+}
+
 //tests for search function
 void test_search(void) {
   Node* list = NULL;
@@ -132,6 +148,7 @@ void test_pop(void) {
 int main(void) {
   test_create();
   test_push();
+  test_append();
   test_search();
   test_size();
   test_delete();
