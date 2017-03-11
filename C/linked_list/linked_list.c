@@ -12,10 +12,26 @@ Node* create(int n) {
 
 // inserts new node to the head of the linked list
 void push(Node** list, int n) {
-  Node* new = malloc(sizeof* new);
-  new->val = n;
+  Node* new = create(n);
   new->next = *list;
   *list = new;
+}
+
+// inserts new node to the end of the linked list
+void append(Node** list, int n) {
+  if (*list == NULL) {
+    push(list, n);
+    return;
+  }
+  Node* new = create(n);
+  Node* cur = *list;
+  while (cur != NULL) {
+    if (cur->next == NULL) {
+      cur->next = new;
+      break;
+    }
+    cur = cur->next;
+  }
 }
 
 // gets a node that contains val of n, returns NULL if not found
