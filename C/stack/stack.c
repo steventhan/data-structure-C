@@ -17,7 +17,7 @@ Stack* create(int n) {
   return s;
 }
 
-
+//push new node onto the stack
 void push(Stack* s, int n) {
   Node* new = _create_node(n);
   new->next = s->top;
@@ -34,6 +34,7 @@ int pop(Stack* s) {
   return popped;
 }
 
+//peek the top value of the stack, but keeps the stack intact
 int peek(Stack* s) {
   if (s->top == NULL) {
     return -1;
